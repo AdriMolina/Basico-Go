@@ -1,55 +1,62 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
-type taskList struct {
-	task []*task
+type task1List1 struct {
+	tasks []*task1
 }
 
-func (t *taskList) agregarALista(tl *task) {
-	t.task = append(t.task, tl)
+func (t *task1List1) appendtask1(tl *task1) {
+
+	t.tasks = append(t.tasks, tl)
 }
 
-//Definicion de un struc con propiedades
-type task struct {
-	nombre      string
-	descripcion string
-	completado  bool
+func (t *task1List1) removetask1(index int) {
+	t.tasks = append(t.tasks[:index], t.tasks[index+1:]...)
 }
 
-//Cambiar propiedades de compñetado
-func (t task) marcarCompleta() {
-	t.completado = true
+type task11 struct {
+	name        string
+	description string
+	completed   bool
 }
 
-func (t task) actualizarDescripcion(descripcion string) {
-	t.descripcion = descripcion
+func (t *task1) markAsCompleted() {
+	t.completed = true
 }
 
-func (t task) actualizarNombre(nombre string) {
-	t.nombre = nombre
+func (t *task1) updateName(name string) {
+	t.name = name
+}
+
+func (t *task1) updateDescription(description string) {
+	t.description = description
 }
 
 func main() {
-	// Inicialización de un struct tipo task
-	t := task{
-		nombre:      "Completar mi curso de Go",
-		descripcion: "Completar mi curso de Go de platzi en esta semana",
+	t1 := &task1{
+		name:        "Terminar Curso de Go",
+		description: "Terminar el Curso de Go en Platzi en las proximas dos semanas",
 	}
-
-	t1 := task{
-		nombre:      "Completar mi curso de Segurdad",
-		descripcion: "Completar mi curso de Go de platzi en esta semana",
+	t2 := &task1{
+		name:        "Terminar Curso de JavaScript",
+		description: "Terminar mi curso de Async/Await en JavaScript",
 	}
-	lista := &taskList{
-		task: []*task{
-			t, t1,
+	list := &task1List{
+		tasks: []*task1{
+			t1, t2,
 		},
 	}
-	fmt.Println(lista.task[0])
-	lista.agregarALista(t3)
-	fmt.Println(len(lista.task))
-
+	fmt.Printf("%+v\n", *list.tasks[0])
+	fmt.Printf("%+v\n", *list.tasks[1])
+	list.tasks[1].markAsCompleted()
+	fmt.Printf("%+v\n", *list.tasks[1])
+	t3 := &task1{
+		name:        "Construir mi propio servidor web",
+		description: "Construir mi propio web server utilizando Go",
+	}
+	list.appendtask1(t3)
+	fmt.Printf("%+v\n", *list.tasks[2])
+	list.removetask1(1)
+	fmt.Printf("%+v\n", *list.tasks[1])
 }
